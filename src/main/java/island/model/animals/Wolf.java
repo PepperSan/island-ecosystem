@@ -1,14 +1,22 @@
 package island.model.animals;
 
 public class Wolf extends Predator {
+
+    public Wolf() {
+        weight = 50;
+        speed = 3;
+        foodNeeded = 8;
+    }
+
     @Override
     public void move() {
-        // позже: выбор направления + скорость
+        System.out.println("Wolf runs");
     }
 
     @Override
     public void reproduce() {
-        // позже: правила размножения на клетке
+        System.out.println("Wolf reproduces");
     }
 }
+
 

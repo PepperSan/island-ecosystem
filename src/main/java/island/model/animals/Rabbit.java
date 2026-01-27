@@ -1,14 +1,21 @@
 package island.model.animals;
 
 public class Rabbit extends Herbivore {
+
+    public Rabbit() {
+        weight = 2;
+        speed = 2;
+        foodNeeded = 0.45;
+    }
+
     @Override
     public void move() {
-        // позже: выбор направления + скорость
+        System.out.println("Rabbit hops");
     }
 
     @Override
     public void reproduce() {
-        // позже: правила размножения на клетке
+        System.out.println("Rabbit reproduces");
     }
 }
 
