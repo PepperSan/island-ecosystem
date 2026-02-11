@@ -1,19 +1,19 @@
 package island.simulation;
 
-import island.model.animals.Animal;
-import island.model.animals.Rabbit;
-import island.model.animals.Wolf;
+import island.model.island.Island;
+import island.simulation.init.IslandPopulator;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Simulation started");
+        Island island = new Island(3, 3);
+        new IslandPopulator().populate(island);
 
-        Animal rabbit = new Rabbit();
-        Animal wolf = new Wolf();
-
-        rabbit.eat();
-        wolf.eat();
+        // Проверим одну клетку
+        System.out.println("Animals in (1,1): " + island.getLocation(1, 1).getAnimals().size());
+        System.out.println("Plants in (1,1): " + island.getLocation(1, 1).getPlants().size());
     }
 }
+
+
 
 
