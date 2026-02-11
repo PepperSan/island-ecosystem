@@ -1,9 +1,12 @@
 package island.model.animals;
 
+import island.model.location.Location;
+
 public abstract class Predator extends Animal {
     @Override
-    public void eat() {
-        System.out.println(getClass().getSimpleName() + " hunts animals");
+    public void eat(Location location) {
+        System.out.println(getClass().getSimpleName() + " tries to hunt");
     }
+
 }
 

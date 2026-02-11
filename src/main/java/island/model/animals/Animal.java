@@ -1,5 +1,8 @@
 package island.model.animals;
 
+import island.model.island.Island;
+import island.model.location.Location;
+
 public abstract class Animal {
 
     protected double weight;
@@ -7,8 +10,13 @@ public abstract class Animal {
     protected int speed;
     protected double foodNeeded;
 
-    public abstract void eat();
-    public abstract void move();
-    public abstract void reproduce();
+
+    public abstract void eat(Location location);
+    public abstract void reproduce(Location location);
+    public abstract void move(Island island, int x, int y);
+
+    public int getSpeed() {
+        return speed;
+    }
 }
 

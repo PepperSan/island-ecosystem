@@ -1,21 +1,26 @@
 package island.model.animals;
 
+import island.model.island.Island;
+import island.model.location.Location;
+
 public class Rabbit extends Herbivore {
 
     public Rabbit() {
-        weight = 2;
-        speed = 2;
-        foodNeeded = 0.45;
+        this.weight = 2;
+        this.speed = 2;
+        this.foodNeeded = 0.45;
+        this.maxPerCell = 150;
     }
 
-    @Override
-    public void move() {
-        System.out.println("Rabbit hops");
-    }
 
     @Override
-    public void reproduce() {
-        System.out.println("Rabbit reproduces");
-    }
+    public void eat(Location location) { }
+
+    @Override
+    public void move(Island island, int x, int y) { }
+
+    @Override
+    public void reproduce(Location location) { }
+
 }
 

@@ -1,22 +1,26 @@
 package island.model.animals;
 
+import island.model.island.Island;
+import island.model.location.Location;
+
 public class Wolf extends Predator {
 
     public Wolf() {
-        weight = 50;
-        speed = 3;
-        foodNeeded = 8;
+        this.weight = 50;
+        this.speed = 3;
+        this.foodNeeded = 8;
+        this.maxPerCell = 30;
     }
 
     @Override
-    public void move() {
-        System.out.println("Wolf runs");
-    }
+    public void eat(Location location) { }
 
     @Override
-    public void reproduce() {
-        System.out.println("Wolf reproduces");
-    }
+    public void move(Island island, int x, int y) { }
+
+    @Override
+    public void reproduce(Location location) { }
+
 }
 
 
