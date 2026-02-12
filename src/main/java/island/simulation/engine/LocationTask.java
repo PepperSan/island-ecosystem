@@ -37,7 +37,7 @@ public class LocationTask implements Callable<LocationDelta> {
 
         ThreadLocalRandom rnd = ThreadLocalRandom.current();
 
-        // 1) Питание (пример: Wolf -> Rabbit 60%)
+
         List<Wolf> wolves = new ArrayList<>();
         List<Rabbit> rabbits = new ArrayList<>();
 
@@ -46,19 +46,39 @@ public class LocationTask implements Callable<LocationDelta> {
             else if (a instanceof Rabbit r) rabbits.add(r);
         }
 
+        // 1) Питание: Wolf -> Rabbit 60%
         int rabbitsAlive = rabbits.size();
+
         for (Wolf w : wolves) {
-            if (rabbitsAlive == 0) break;
-            if (rnd.nextInt(100) < 60) { // 60% шанс
+            boolean ate = false;
+
+            if (rabbitsAlive > 0 && rnd.nextInt(100) < 60) {
                 Rabbit victim = rabbits.get(rabbitsAlive - 1);
                 toRemove.add(victim);
                 rabbitsAlive--;
+                ate = true;
             }
+
+            if (ate) w.resetHunger();
+            else w.increaseHunger();
+
+            if (w.isStarving()) toRemove.add(w);
         }
 
-        // 2) Кролики едят растения (по 1 растению)
+// 2) Кролики едят растения (по 1 растению на кролика)
         int rabbitsAfterHunt = rabbitsAlive;
         int plantsToRemove = Math.min(plantsCount, rabbitsAfterHunt);
+
+        int fedRabbits = plantsToRemove; // столько кроликов точно поели
+        for (int i = 0; i < rabbitsAfterHunt; i++) {
+            Rabbit r = rabbits.get(i);
+
+            if (i < fedRabbits) r.resetHunger();
+            else r.increaseHunger();
+
+            if (r.isStarving()) toRemove.add(r);
+        }
+
 
         // 3) Движение (двигаются те, кого НЕ съели)
         for (Animal a : animals) {

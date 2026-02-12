@@ -9,8 +9,18 @@ public abstract class Animal {
     protected int maxPerCell;
     protected int speed;
     protected double foodNeeded;
+    protected double hunger = 0;
+    protected int starvationLimit = 3;
 
-
+    public void resetHunger() {
+        hunger = 0;
+    }
+    public void increaseHunger() {
+        hunger++;
+    }
+    public boolean isStarving() {
+        return hunger >= starvationLimit;
+    }
     public abstract void eat(Location location);
     public abstract void reproduce(Location location);
     public abstract void move(Island island, int x, int y);
