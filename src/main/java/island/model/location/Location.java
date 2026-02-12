@@ -34,5 +34,13 @@ public class Location {
     public void removePlant(Plant plant) {
         plants.remove(plant);
     }
+
+    public void removeFirstPlants(int n) {
+        int count = Math.min(n, plants.size());
+        for (int i = 0; i < count; i++) {
+            plants.remove(0);
+        }
+    }
+
 }
 

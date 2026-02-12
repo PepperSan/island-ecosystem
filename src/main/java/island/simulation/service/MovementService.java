@@ -18,7 +18,7 @@ public class MovementService {
                 List<Animal> snapshot = new ArrayList<>(from.getAnimals());
 
                 for (Animal animal : snapshot) {
-                    int speed = animal.getSpeed(); // сейчас надо будет добавить в Animal
+                    int speed = animal.getSpeed();
                     Point toPoint = island.randomNeighbor(x, y, speed);
 
                     if (toPoint.x() == x && toPoint.y() == y) continue;
