@@ -45,6 +45,12 @@ public class SimulationEngine {
             e.printStackTrace();
             stop();
         }
+
+        if (countAnimals() == 0) {
+            System.out.println("STOP: all animals are dead");
+            stop();
+        }
+
     }
 
     private void applyDeltas(List<LocationDelta> deltas) {
@@ -81,6 +87,27 @@ public class SimulationEngine {
         }
         System.out.println("Tick: animals=" + animals + ", plants=" + plants);
     }
+
+    private int countAnimals() {
+        int animals = 0;
+        for (int y = 0; y < island.getHeight(); y++) {
+            for (int x = 0; x < island.getWidth(); x++) {
+                animals += island.getLocation(x, y).getAnimals().size();
+            }
+        }
+        return animals;
+    }
+
+    private int countPlants() {
+        int plants = 0;
+        for (int y = 0; y < island.getHeight(); y++) {
+            for (int x = 0; x < island.getWidth(); x++) {
+                plants += island.getLocation(x, y).getPlants().size();
+            }
+        }
+        return plants;
+    }
+
 
     public void stop() {
         scheduler.shutdownNow();
