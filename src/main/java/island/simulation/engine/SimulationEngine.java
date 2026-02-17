@@ -59,6 +59,10 @@ public class SimulationEngine {
             Location loc = island.getLocation(d.x(), d.y());
             for (var a : d.animalsToRemove()) loc.removeAnimal(a);
             loc.removeFirstPlants(d.plantsToRemoveCount());
+            // рост растений
+            for (int i = 0; i < d.plantsToAddCount(); i++) {
+                loc.growPlant();
+            }
             for (var b : d.animalsBorn()) loc.addAnimal(b);
         }
 

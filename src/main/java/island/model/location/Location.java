@@ -10,6 +10,8 @@ public class Location {
 
     private final List<Animal> animals = new ArrayList<>();
     private final List<Plant> plants = new ArrayList<>();
+    private static final int MAX_PLANTS = 10;
+
 
     public List<Animal> getAnimals() {
         return animals;
@@ -24,8 +26,19 @@ public class Location {
     }
 
     public void addPlant(Plant plant) {
-        plants.add(plant);
+        if (plants.size() < MAX_PLANTS) {
+            plants.add(plant);
+        }
     }
+
+
+    public void growPlant() {
+        if (plants.size() < MAX_PLANTS) {
+            plants.add(new Plant(1.0));
+        }
+    }
+
+
 
     public void removeAnimal(Animal animal) {
         animals.remove(animal);
@@ -41,6 +54,7 @@ public class Location {
             plants.remove(0);
         }
     }
+
 
 }
 

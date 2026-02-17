@@ -8,6 +8,7 @@ public record LocationDelta(
         int x, int y,
         List<Animal> animalsToRemove,
         int plantsToRemoveCount,
+        int plantsToAddCount,
         List<Animal> animalsBorn,
         List<MoveRequest> moves
 ) {}

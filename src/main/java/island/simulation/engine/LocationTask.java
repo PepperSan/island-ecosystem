@@ -5,6 +5,7 @@ import island.model.animals.Rabbit;
 import island.model.animals.Wolf;
 import island.model.island.Island;
 import island.model.location.Location;
+import island.model.plants.Plant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class LocationTask implements Callable<LocationDelta> {
 
         List<Animal> animals = new ArrayList<>(location.getAnimals());
         int plantsCount = location.getPlants().size();
+        int plantsToAdd = 0;
 
         List<Animal> toRemove = new ArrayList<>();
         List<Animal> born = new ArrayList<>();
@@ -78,6 +80,12 @@ public class LocationTask implements Callable<LocationDelta> {
 
             if (r.isStarving()) toRemove.add(r);
         }
+        // рост растений
+        if (rnd.nextInt(100) < 30) {
+            plantsToAdd = 1;
+        }
+
+
 
 
         // 3) Движение (двигаются те, кого НЕ съели)
@@ -96,7 +104,7 @@ public class LocationTask implements Callable<LocationDelta> {
             moves.add(new MoveRequest(a, x, y, nx, ny));
         }
 
-        return new LocationDelta(x, y, toRemove, plantsToRemove, born, moves);
+        return new LocationDelta(x, y, toRemove, plantsToRemove, plantsToAdd, born, moves);
     }
 
     private int clamp(int v, int min, int max) {
