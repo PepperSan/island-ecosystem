@@ -1,6 +1,7 @@
 package island.model.location;
 
 import island.model.animals.Animal;
+import island.model.animals.Species;
 import island.model.plants.Plant;
 
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ public class Location {
 
     private final List<Animal> animals = new ArrayList<>();
     private final List<Plant> plants = new ArrayList<>();
-    private static final int MAX_PLANTS = 3;
-    private static final int MAX_ANIMALS = 5;
+
+
 
 
 
@@ -23,22 +24,30 @@ public class Location {
         return plants;
     }
 
+    public boolean canAddAnimal(Species s) {
+        int count = 0;
+        for (Animal a : animals) {
+            if (a.getSpecies() == s) count++;
+        }
+        return count < s.maxPerCell;
+    }
+
     public void addAnimal(Animal animal) {
-        if (animals.size() < MAX_ANIMALS) {
+        if (canAddAnimal(animal.getSpecies())) {
             animals.add(animal);
         }
     }
 
 
+
     public void addPlant(Plant plant) {
-        if (plants.size() < MAX_PLANTS) {
+        if (plants.size() < Species.PLANT.maxPerCell) {
             plants.add(plant);
         }
     }
 
-
     public void growPlant() {
-        if (plants.size() < MAX_PLANTS) {
+        if (plants.size() < Species.PLANT.maxPerCell) {
             plants.add(new Plant(1.0));
         }
     }
