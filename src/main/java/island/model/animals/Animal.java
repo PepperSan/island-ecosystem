@@ -11,6 +11,12 @@ public abstract class Animal {
     protected double foodNeeded;
     protected double hunger = 0;
     protected int starvationLimit = 3;
+    private final Species species;
+
+    protected Animal(Species species) {
+        this.species = species;
+    }
+
 
     public void resetHunger() {
         hunger = 0;
@@ -27,6 +33,9 @@ public abstract class Animal {
 
     public int getSpeed() {
         return speed;
+    }
+    public Species getSpecies() {
+        return species;
     }
 }
 

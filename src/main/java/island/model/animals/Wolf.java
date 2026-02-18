@@ -6,6 +6,7 @@ import island.model.location.Location;
 public class Wolf extends Predator {
 
     public Wolf() {
+        super(Species.WOLF);
         this.weight = 50;
         this.speed = 3;
         this.foodNeeded = 8;

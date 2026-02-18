@@ -6,6 +6,7 @@ import island.model.location.Location;
 public class Rabbit extends Herbivore {
 
     public Rabbit() {
+        super(Species.RABBIT);
         this.weight = 2;
         this.speed = 2;
         this.foodNeeded = 0.45;
