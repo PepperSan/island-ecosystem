@@ -10,7 +10,9 @@ public class Location {
 
     private final List<Animal> animals = new ArrayList<>();
     private final List<Plant> plants = new ArrayList<>();
-    private static final int MAX_PLANTS = 10;
+    private static final int MAX_PLANTS = 3;
+    private static final int MAX_ANIMALS = 5;
+
 
 
     public List<Animal> getAnimals() {
@@ -22,8 +24,11 @@ public class Location {
     }
 
     public void addAnimal(Animal animal) {
-        animals.add(animal);
+        if (animals.size() < MAX_ANIMALS) {
+            animals.add(animal);
+        }
     }
+
 
     public void addPlant(Plant plant) {
         if (plants.size() < MAX_PLANTS) {
