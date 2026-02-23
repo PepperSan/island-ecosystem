@@ -2,6 +2,9 @@ package island.model.animals;
 
 import island.model.island.Island;
 import island.model.location.Location;
+import island.simulation.engine.LocationDelta;
+
+import java.util.Random;
 
 public abstract class Animal {
 
@@ -15,6 +18,10 @@ public abstract class Animal {
 
     protected Animal(Species species) {
         this.species = species;
+        this.weight = species.weight;
+        this.maxPerCell = species.maxPerCell;
+        this.speed = species.speed;
+        this.foodNeeded = species.foodToFull;
     }
 
 
@@ -27,7 +34,7 @@ public abstract class Animal {
     public boolean isStarving() {
         return hunger >= starvationLimit;
     }
-    public abstract void eat(Location location);
+    public abstract void eat(Location location, LocationDelta delta, Random rnd);
     public abstract void reproduce(Location location);
     public abstract void move(Island island, int x, int y);
 

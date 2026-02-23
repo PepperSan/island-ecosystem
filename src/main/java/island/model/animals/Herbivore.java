@@ -1,6 +1,7 @@
 package island.model.animals;
 
 import island.model.location.Location;
+import island.simulation.engine.LocationDelta;
 
 public abstract class Herbivore extends Animal {
 
@@ -9,7 +10,7 @@ public abstract class Herbivore extends Animal {
     }
 
     @Override
-    public void eat(Location location) {
+    public void eat(Location loc, LocationDelta delta, java.util.Random rnd) {
         System.out.println(getClass().getSimpleName() +
                 " tries to eat plants");
     }

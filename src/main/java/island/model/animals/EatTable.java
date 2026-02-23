@@ -14,8 +14,11 @@ public final class EatTable {
         CHANCE[predator.ordinal()][prey.ordinal()] = chance;
     }
 
-    public static int chance(Species predator, Species prey) {
-        return CHANCE[predator.ordinal()][prey.ordinal()];
+    public static int chance(Species predator, Species victim) {
+        if (predator == Species.WOLF && victim == Species.RABBIT) return 60;
+        if (predator == Species.WOLF && victim == Species.MOUSE) return 80;
+        if (predator == Species.WOLF && victim == Species.PLANT) return 0;
+        return 0;
     }
 
     private EatTable() {}

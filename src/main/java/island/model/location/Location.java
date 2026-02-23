@@ -54,6 +54,7 @@ public class Location {
 
 
 
+
     public void removeAnimal(Animal animal) {
         animals.remove(animal);
     }

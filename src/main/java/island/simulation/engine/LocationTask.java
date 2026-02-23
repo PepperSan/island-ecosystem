@@ -1,14 +1,13 @@
 package island.simulation.engine;
 
 import island.model.animals.Animal;
-import island.model.animals.Rabbit;
-import island.model.animals.Wolf;
+import island.model.animals.Predator;
 import island.model.island.Island;
 import island.model.location.Location;
-import island.model.plants.Plant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,89 +25,39 @@ public class LocationTask implements Callable<LocationDelta> {
 
     @Override
     public LocationDelta call() {
-        Location location = island.getLocation(x, y);
+        Location loc = island.getLocation(x, y);
 
+        // снимок животных (чтобы не ловить ConcurrentModification)
+        List<Animal> snapshot = new ArrayList<>(loc.getAnimals());
 
-        List<Animal> animals = new ArrayList<>(location.getAnimals());
-        int plantsCount = location.getPlants().size();
-        int plantsToAdd = 0;
+        Random rnd = ThreadLocalRandom.current();
 
-        List<Animal> toRemove = new ArrayList<>();
-        List<Animal> born = new ArrayList<>();
-        List<MoveRequest> moves = new ArrayList<>();
+        LocationDelta delta = new LocationDelta(x, y);
 
-        ThreadLocalRandom rnd = ThreadLocalRandom.current();
+        // 1) питание
+        for (Animal a : snapshot) {
+            if (delta.getAnimalsToRemove().contains(a)) continue;
 
-
-        List<Wolf> wolves = new ArrayList<>();
-        List<Rabbit> rabbits = new ArrayList<>();
-
-        for (Animal a : animals) {
-            if (a instanceof Wolf w) wolves.add(w);
-            else if (a instanceof Rabbit r) rabbits.add(r);
-        }
-
-        // 1) Питание: Wolf -> Rabbit 60%
-        int rabbitsAlive = rabbits.size();
-
-        for (Wolf w : wolves) {
-            boolean ate = false;
-
-            if (rabbitsAlive > 0 && rnd.nextInt(100) < 60) {
-                Rabbit victim = rabbits.get(rabbitsAlive - 1);
-                toRemove.add(victim);
-                rabbitsAlive--;
-                ate = true;
+            if (a instanceof Predator p) {
+                p.eat(loc, delta, rnd);
             }
-
-            if (ate) w.resetHunger();
-            else w.increaseHunger();
-
-            if (w.isStarving()) toRemove.add(w);
+            // позже добавишь Herbivore
         }
 
-// 2) Кролики едят растения (по 1 растению на кролика)
-        int rabbitsAfterHunt = rabbitsAlive;
-        int plantsToRemove = Math.min(plantsCount, rabbitsAfterHunt);
-
-        int fedRabbits = plantsToRemove; // столько кроликов точно поели
-        for (int i = 0; i < rabbitsAfterHunt; i++) {
-            Rabbit r = rabbits.get(i);
-
-            if (i < fedRabbits) r.resetHunger();
-            else r.increaseHunger();
-
-            if (r.isStarving()) toRemove.add(r);
-        }
-        // рост растений
+        // 2) рост растений (теперь пишем в delta, а не в локальную переменную)
         if (rnd.nextInt(100) < 30) {
-            plantsToAdd = 1;
+            delta.addPlantToAdd();
         }
 
+        // 3) движение (позже)
+        // delta.addMove(new MoveRequest(a, x, y, nx, ny));
 
+        System.out.println("delta: removeAnimals=" + delta.getAnimalsToRemove().size()
+                + ", born=" + delta.getAnimalsBorn().size()
+                + ", moves=" + delta.getMoves().size()
+                + ", plantsRemove=" + delta.getPlantsToRemoveCount()
+                + ", plantsAdd=" + delta.getPlantsToAddCount());
 
-
-        // 3) Движение (двигаются те, кого НЕ съели)
-        for (Animal a : animals) {
-            if (toRemove.contains(a)) continue;
-
-            int speed = a.getSpeed();
-            int stepX = rnd.nextInt(-speed, speed + 1);
-            int stepY = rnd.nextInt(-speed, speed + 1);
-
-            int nx = clamp(x + stepX, 0, island.getWidth() - 1);
-            int ny = clamp(y + stepY, 0, island.getHeight() - 1);
-
-            if (nx == x && ny == y) continue;
-
-            moves.add(new MoveRequest(a, x, y, nx, ny));
-        }
-
-        return new LocationDelta(x, y, toRemove, plantsToRemove, plantsToAdd, born, moves);
-    }
-
-    private int clamp(int v, int min, int max) {
-        return Math.max(min, Math.min(max, v));
+        return delta;
     }
 }
-

@@ -2,19 +2,16 @@ package island.model.animals;
 
 import island.model.island.Island;
 import island.model.location.Location;
+import island.simulation.engine.LocationDelta;
 
 public class Wolf extends Predator {
 
     public Wolf() {
         super(Species.WOLF);
-        this.weight = 50;
-        this.speed = 3;
-        this.foodNeeded = 8;
-        this.maxPerCell = 30;
     }
 
     @Override
-    public void eat(Location location) { }
+    public void eat(Location loc, LocationDelta delta, java.util.Random rnd) { }
 
     @Override
     public void move(Island island, int x, int y) { }

@@ -1,5 +1,6 @@
 package island.simulation.engine;
 
+import island.model.animals.Animal;
 import island.model.island.Island;
 import island.model.location.Location;
 
@@ -56,23 +57,26 @@ public class SimulationEngine {
     private void applyDeltas(List<LocationDelta> deltas) {
         // 1) применяем локальные изменения (еда/рождение)
         for (LocationDelta d : deltas) {
-            Location loc = island.getLocation(d.x(), d.y());
-            for (var a : d.animalsToRemove()) loc.removeAnimal(a);
-            loc.removeFirstPlants(d.plantsToRemoveCount());
-            // рост растений
-            for (int i = 0; i < d.plantsToAddCount(); i++) {
+            Location loc = island.getLocation(d.getX(), d.getY());
+
+            for (var a : d.getAnimalsToRemove()) loc.removeAnimal(a);
+
+            loc.removeFirstPlants(d.getPlantsToRemoveCount());
+
+            for (int i = 0; i < d.getPlantsToAddCount(); i++) {
                 loc.growPlant();
             }
-            for (var b : d.animalsBorn()) loc.addAnimal(b);
+
+            for (var b : d.getAnimalsBorn()) loc.addAnimal(b);
         }
 
         // 2) применяем перемещения
         for (LocationDelta d : deltas) {
-            for (MoveRequest m : d.moves()) {
+            for (MoveRequest m : d.getMoves()) {
                 Location from = island.getLocation(m.fromX(), m.fromY());
                 Location to = island.getLocation(m.toX(), m.toY());
 
-                if (from.getAnimals().remove(m.animal())) { // если ещё там
+                if (from.getAnimals().remove(m.animal())) {
                     to.addAnimal(m.animal());
                 }
             }
