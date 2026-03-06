@@ -17,6 +17,7 @@ public class SimulationEngine {
     public SimulationEngine(Island island) {
         this.island = island;
         this.workers = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
         this.scheduler = Executors.newSingleThreadScheduledExecutor();
     }
 

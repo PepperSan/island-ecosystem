@@ -12,10 +12,6 @@ public class Location {
     private final List<Animal> animals = new ArrayList<>();
     private final List<Plant> plants = new ArrayList<>();
 
-
-
-
-
     public List<Animal> getAnimals() {
         return animals;
     }

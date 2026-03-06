@@ -17,7 +17,7 @@ public class Wolf extends Predator {
     public void move(Island island, int x, int y) { }
 
     @Override
-    public void reproduce(Location location) { }
+    public void reproduce(Location location, LocationDelta delta) { }
 
 }
 

@@ -38,7 +38,7 @@ public abstract class Predator extends Animal {
 
         // 2) если съел — помечаем жертву на удаление, сбрасываем голод
         if (victim != null) {
-            delta.addAnimalToRemove(victim);   // <-- подгони под своё имя метода
+            delta.addAnimalToRemove(victim);
             this.resetHunger();
             return;
         }

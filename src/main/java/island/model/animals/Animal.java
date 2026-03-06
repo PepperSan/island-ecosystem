@@ -35,7 +35,8 @@ public abstract class Animal {
         return hunger >= starvationLimit;
     }
     public abstract void eat(Location location, LocationDelta delta, Random rnd);
-    public abstract void reproduce(Location location);
+    public void reproduce(Location location, LocationDelta delta) {
+    }
     public abstract void move(Island island, int x, int y);
 
     public int getSpeed() {

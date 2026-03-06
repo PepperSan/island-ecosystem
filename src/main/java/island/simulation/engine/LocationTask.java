@@ -1,6 +1,7 @@
 package island.simulation.engine;
 
 import island.model.animals.Animal;
+import island.model.animals.Herbivore;
 import island.model.animals.Predator;
 import island.model.island.Island;
 import island.model.location.Location;
@@ -23,11 +24,13 @@ public class LocationTask implements Callable<LocationDelta> {
         this.y = y;
     }
 
+
+
     @Override
     public LocationDelta call() {
         Location loc = island.getLocation(x, y);
 
-        // снимок животных (чтобы не ловить ConcurrentModification)
+
         List<Animal> snapshot = new ArrayList<>(loc.getAnimals());
 
         Random rnd = ThreadLocalRandom.current();
@@ -38,25 +41,19 @@ public class LocationTask implements Callable<LocationDelta> {
         for (Animal a : snapshot) {
             if (delta.getAnimalsToRemove().contains(a)) continue;
 
-            if (a instanceof Predator p) {
-                p.eat(loc, delta, rnd);
+            a.eat(loc, delta, rnd);
+            a.reproduce(loc, delta);
+
+            if (a.isStarving()) {
+                delta.addAnimalToRemove(a);
             }
-            // позже добавишь Herbivore
         }
 
-        // 2) рост растений (теперь пишем в delta, а не в локальную переменную)
+        // 2) рост растений
         if (rnd.nextInt(100) < 30) {
             delta.addPlantToAdd();
         }
 
-        // 3) движение (позже)
-        // delta.addMove(new MoveRequest(a, x, y, nx, ny));
-
-        System.out.println("delta: removeAnimals=" + delta.getAnimalsToRemove().size()
-                + ", born=" + delta.getAnimalsBorn().size()
-                + ", moves=" + delta.getMoves().size()
-                + ", plantsRemove=" + delta.getPlantsToRemoveCount()
-                + ", plantsAdd=" + delta.getPlantsToAddCount());
 
         return delta;
     }

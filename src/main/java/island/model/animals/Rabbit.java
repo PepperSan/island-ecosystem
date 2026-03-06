@@ -4,6 +4,8 @@ import island.model.island.Island;
 import island.model.location.Location;
 import island.simulation.engine.LocationDelta;
 
+import java.util.Random;
+
 public class Rabbit extends Herbivore {
 
     public Rabbit() {
@@ -12,13 +14,15 @@ public class Rabbit extends Herbivore {
 
 
     @Override
-    public void eat(Location loc, LocationDelta delta, java.util.Random rnd) { }
+    public void eat(Location location, LocationDelta delta, Random rnd) {
+        super.eat(location, delta, rnd);
+    }
 
     @Override
     public void move(Island island, int x, int y) { }
 
     @Override
-    public void reproduce(Location location) { }
+    public void reproduce(Location location, LocationDelta delta) { }
 
 }
 
