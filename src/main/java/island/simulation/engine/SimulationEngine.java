@@ -1,6 +1,7 @@
 package island.simulation.engine;
 
 import island.model.animals.Animal;
+import island.model.animals.Species;
 import island.model.island.Island;
 import island.model.location.Location;
 
@@ -98,16 +99,29 @@ public class SimulationEngine {
     }
 
     private void printStats() {
-        int animals = 0;
+        int rabbits = 0;
+        int wolves = 0;
         int plants = 0;
+
         for (int y = 0; y < island.getHeight(); y++) {
             for (int x = 0; x < island.getWidth(); x++) {
-                var loc = island.getLocation(x, y);
-                animals += loc.getAnimals().size();
-                plants += loc.getPlants().size();
+                Location location = island.getLocation(x, y);
+
+                for (Animal animal : location.getAnimals()) {
+                    if (animal.getSpecies() == Species.RABBIT) {
+                        rabbits++;
+                    } else if (animal.getSpecies() == Species.WOLF) {
+                        wolves++;
+                    }
+                }
+
+                plants += location.getPlants().size();
             }
         }
-        System.out.println("Tick: animals=" + animals + ", plants=" + plants);
+
+        System.out.println("Tick: rabbits=" + rabbits
+                + ", wolves=" + wolves
+                + ", plants=" + plants);
     }
 
     private int countAnimals() {
