@@ -30,7 +30,24 @@ public class Wolf extends Predator {
 
     @Override
     public void reproduce(Location location, LocationDelta delta) {
-        // позже
+        int wolvesCount = 0;
+
+        for (Animal animal : location.getAnimals()) {
+            if (animal instanceof Wolf) {
+                wolvesCount++;
+            }
+        }
+
+        long newbornWolves = delta.getAnimalsBorn().stream()
+                .filter(animal -> animal instanceof Wolf)
+                .count();
+
+        if (wolvesCount >= 2
+                && newbornWolves == 0
+                && location.canAddAnimal(Species.WOLF)
+                && ThreadLocalRandom.current().nextInt(100) < 25) {
+            delta.addAnimalBorn(new Wolf());
+        }
     }
 }
 
