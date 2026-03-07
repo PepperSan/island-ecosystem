@@ -56,11 +56,17 @@ public class SimulationEngine {
     }
 
     private void applyDeltas(List<LocationDelta> deltas) {
-        // 1) применяем локальные изменения (еда/рождение)
+        applyLocalChanges(deltas);
+        applyMoves(deltas);
+    }
+
+    private void applyLocalChanges(List<LocationDelta> deltas) {
         for (LocationDelta d : deltas) {
             Location loc = island.getLocation(d.getX(), d.getY());
 
-            for (var a : d.getAnimalsToRemove()) loc.removeAnimal(a);
+            for (var a : d.getAnimalsToRemove()) {
+                loc.removeAnimal(a);
+            }
 
             loc.removeFirstPlants(d.getPlantsToRemoveCount());
 
@@ -68,19 +74,26 @@ public class SimulationEngine {
                 loc.growPlant();
             }
 
-            for (var b : d.getAnimalsBorn()) loc.addAnimal(b);
+            for (var b : d.getAnimalsBorn()) {
+                loc.addAnimal(b);
+            }
         }
+    }
 
-        // 2) применяем перемещения
+    private void applyMoves(List<LocationDelta> deltas) {
         for (LocationDelta d : deltas) {
             for (MoveRequest m : d.getMoves()) {
                 Location from = island.getLocation(m.fromX(), m.fromY());
                 Location to = island.getLocation(m.toX(), m.toY());
 
-                if (from.getAnimals().remove(m.animal())) {
-                    to.addAnimal(m.animal());
-                }
+                moveAnimal(from, to, m.animal());
             }
+        }
+    }
+
+    private void moveAnimal(Location from, Location to, Animal animal) {
+        if (to.canAddAnimal(animal.getSpecies()) && from.removeAnimal(animal)) {
+            to.addAnimal(animal);
         }
     }
 

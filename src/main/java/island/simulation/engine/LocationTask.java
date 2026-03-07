@@ -46,6 +46,22 @@ public class LocationTask implements Callable<LocationDelta> {
 
             if (a.isStarving()) {
                 delta.addAnimalToRemove(a);
+                continue;
+            }
+
+            int speed = a.getSpeed();
+
+            if (speed > 0) {
+                int dx = rnd.nextInt(-speed, speed + 1);
+                int dy = rnd.nextInt(-speed, speed + 1);
+
+                int newX = Math.max(0, Math.min(island.getWidth() - 1, x + dx));
+                int newY = Math.max(0, Math.min(island.getHeight() - 1, y + dy));
+
+                if (newX != x || newY != y) {
+                    delta.addMove(new MoveRequest(a, x, y, newX, newY));
+                }
+
             }
         }
 

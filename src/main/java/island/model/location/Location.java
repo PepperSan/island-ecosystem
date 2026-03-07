@@ -35,7 +35,6 @@ public class Location {
     }
 
 
-
     public void addPlant(Plant plant) {
         if (plants.size() < Species.PLANT.maxPerCell) {
             plants.add(plant);
@@ -51,8 +50,8 @@ public class Location {
 
 
 
-    public void removeAnimal(Animal animal) {
-        animals.remove(animal);
+    public boolean removeAnimal(Animal animal) {
+        return animals.remove(animal);
     }
 
     public void removePlant(Plant plant) {
