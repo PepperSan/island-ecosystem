@@ -4,6 +4,8 @@ import island.model.island.Island;
 import island.model.location.Location;
 import island.simulation.engine.LocationDelta;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Wolf extends Predator {
 
     public Wolf() {
@@ -17,8 +19,9 @@ public class Wolf extends Predator {
     public void move(Island island, int x, int y) { }
 
     @Override
-    public void reproduce(Location location, LocationDelta delta) { }
-
+    public void reproduce(Location location, LocationDelta delta) {
+        // позже
+    }
 }
 
 
