@@ -100,10 +100,14 @@ public class SimulationEngine {
 
     private void printStats() {
         int rabbits = 0;
-        int wolves = 0;
-        int plants = 0;
         int mice = 0;
+        int goats = 0;
+        int wolves = 0;
         int foxes = 0;
+        int boas = 0;
+        int plants = 0;
+        int sheep = 0;
+        int bears = 0;
 
         for (int y = 0; y < island.getHeight(); y++) {
             for (int x = 0; x < island.getWidth(); x++) {
@@ -114,10 +118,19 @@ public class SimulationEngine {
                         rabbits++;
                     } else if (animal.getSpecies() == Species.MOUSE) {
                         mice++;
+                    } else if (animal.getSpecies() == Species.GOAT) {
+                        goats++;
                     } else if (animal.getSpecies() == Species.WOLF) {
                         wolves++;
                     } else if (animal.getSpecies() == Species.FOX) {
                         foxes++;
+                    } else if (animal.getSpecies() == Species.BOA) {
+                        boas++;
+                    }
+                    else if (animal.getSpecies() == Species.SHEEP) {
+                        sheep++;
+                    } else if (animal.getSpecies() == Species.BEAR) {
+                        bears++;
                     }
                 }
 
@@ -127,8 +140,12 @@ public class SimulationEngine {
 
         System.out.println("Tick: rabbits=" + rabbits
                 + ", mice=" + mice
+                + ", goats=" + goats
+                + ", sheep=" + sheep
                 + ", wolves=" + wolves
                 + ", foxes=" + foxes
+                + ", boas=" + boas
+                + ", bears=" + bears
                 + ", plants=" + plants);
     }
 
