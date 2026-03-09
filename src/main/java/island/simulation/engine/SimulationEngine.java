@@ -108,6 +108,13 @@ public class SimulationEngine {
         int plants = 0;
         int sheep = 0;
         int bears = 0;
+        int ducks = 0;
+        int deer = 0;
+        int eagles = 0;
+        int horses = 0;
+        int buffalo = 0;
+        int boars = 0;
+        int caterpillars = 0;
 
         for (int y = 0; y < island.getHeight(); y++) {
             for (int x = 0; x < island.getWidth(); x++) {
@@ -131,7 +138,22 @@ public class SimulationEngine {
                         sheep++;
                     } else if (animal.getSpecies() == Species.BEAR) {
                         bears++;
+                    }else if (animal.getSpecies() == Species.DUCK) {
+                        ducks++;
+                    } else if (animal.getSpecies() == Species.DEER) {
+                        deer++;
+                    } else if (animal.getSpecies() == Species.EAGLE) {
+                        eagles++;
+                    }else if (animal.getSpecies() == Species.HORSE) {
+                        horses++;
+                    } else if (animal.getSpecies() == Species.BUFFALO) {
+                        buffalo++;
+                    }else if (animal.getSpecies() == Species.BOAR) {
+                        boars++;
+                    } else if (animal.getSpecies() == Species.CATERPILLAR) {
+                        caterpillars++;
                     }
+
                 }
 
                 plants += location.getPlants().size();
@@ -142,10 +164,17 @@ public class SimulationEngine {
                 + ", mice=" + mice
                 + ", goats=" + goats
                 + ", sheep=" + sheep
+                + ", ducks=" + ducks
+                + ", deer=" + deer
+                + ", horses=" + horses
+                + ", buffalo=" + buffalo
+                + ", boars=" + boars
+                + ", caterpillars=" + caterpillars
                 + ", wolves=" + wolves
                 + ", foxes=" + foxes
                 + ", boas=" + boas
                 + ", bears=" + bears
+                + ", eagles=" + eagles
                 + ", plants=" + plants);
     }
 

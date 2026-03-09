@@ -18,6 +18,13 @@ public class IslandPopulator {
     private static final int MAX_BOAS_PER_CELL = 1;
     private static final int MAX_SHEEP_PER_CELL = 1;
     private static final int MAX_BEARS_PER_CELL = 1;
+    private static final int MAX_EAGLES_PER_CELL = 1;
+    private static final int MAX_DUCKS_PER_CELL = 1;
+    private static final int MAX_DEER_PER_CELL = 1;
+    private static final int MAX_HORSES_PER_CELL = 1;
+    private static final int MAX_BUFFALO_PER_CELL = 1;
+    private static final int MAX_BOARS_PER_CELL = 1;
+    private static final int MAX_CATERPILLARS_PER_CELL = 2;
 
     public void populate(Island island) {
         ThreadLocalRandom rnd = ThreadLocalRandom.current();
@@ -34,6 +41,14 @@ public class IslandPopulator {
                 int boas = rnd.nextInt(MAX_BOAS_PER_CELL + 1);
                 int sheep = rnd.nextInt(MAX_SHEEP_PER_CELL + 1);
                 int bears = rnd.nextInt(MAX_BEARS_PER_CELL + 1);
+                int eagles = rnd.nextInt(MAX_EAGLES_PER_CELL + 1);
+                int ducks = rnd.nextInt(MAX_DUCKS_PER_CELL + 1);
+                int deer = rnd.nextInt(MAX_DEER_PER_CELL + 1);
+                int horses = rnd.nextInt(MAX_HORSES_PER_CELL + 1);
+                int buffalo = rnd.nextInt(MAX_BUFFALO_PER_CELL + 1);
+                int boars = rnd.nextInt(MAX_BOARS_PER_CELL + 1);
+                int caterpillars = rnd.nextInt(MAX_CATERPILLARS_PER_CELL + 1);
+
 
 
                 for (int i = 0; i < rabbits; i++) {
@@ -47,6 +62,13 @@ public class IslandPopulator {
                 }
                 for (int i = 0; i < sheep; i++) {
                     island.getLocation(x, y).addAnimal(new Sheep());
+                }
+                for (int i = 0; i < ducks; i++) {
+                    island.getLocation(x, y).addAnimal(new Duck());
+                }
+
+                for (int i = 0; i < deer; i++) {
+                    island.getLocation(x, y).addAnimal(new Deer());
                 }
                 for (int i = 0; i < wolves; i++) {
                     island.getLocation(x, y).addAnimal(new Wolf());
@@ -62,6 +84,23 @@ public class IslandPopulator {
                 }
                 for (int i = 0; i < bears; i++) {
                     island.getLocation(x, y).addAnimal(new Bear());
+                }
+                for (int i = 0; i < eagles; i++) {
+                    island.getLocation(x, y).addAnimal(new Eagle());
+                }
+                for (int i = 0; i < horses; i++) {
+                    island.getLocation(x, y).addAnimal(new Horse());
+                }
+
+                for (int i = 0; i < buffalo; i++) {
+                    island.getLocation(x, y).addAnimal(new Buffalo());
+                }
+                for (int i = 0; i < boars; i++) {
+                    island.getLocation(x, y).addAnimal(new Boar());
+                }
+
+                for (int i = 0; i < caterpillars; i++) {
+                    island.getLocation(x, y).addAnimal(new Caterpillar());
                 }
 
             }
