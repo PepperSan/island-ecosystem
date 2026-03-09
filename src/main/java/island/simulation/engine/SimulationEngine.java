@@ -30,32 +30,38 @@ public class SimulationEngine {
 
     private void tick() {
         try {
-            List<Future<LocationDelta>> futures = new ArrayList<>();
-
-            for (int y = 0; y < island.getHeight(); y++) {
-                for (int x = 0; x < island.getWidth(); x++) {
-                    futures.add(workers.submit(new LocationTask(island, x, y)));
-                }
-            }
-
-            List<LocationDelta> deltas = new ArrayList<>(futures.size());
-            for (Future<LocationDelta> f : futures) {
-                deltas.add(f.get()); // ждём завершения всех задач
-            }
-
+            List<LocationDelta> deltas = collectDeltas();
             applyDeltas(deltas);
             printStats();
-
+            stopIfNoAnimalsLeft();
         } catch (Exception e) {
             e.printStackTrace();
             stop();
         }
+    }
 
+    private List<LocationDelta> collectDeltas() throws Exception {
+        List<Future<LocationDelta>> futures = new ArrayList<>();
+
+        for (int y = 0; y < island.getHeight(); y++) {
+            for (int x = 0; x < island.getWidth(); x++) {
+                futures.add(workers.submit(new LocationTask(island, x, y)));
+            }
+        }
+
+        List<LocationDelta> deltas = new ArrayList<>(futures.size());
+        for (Future<LocationDelta> future : futures) {
+            deltas.add(future.get());
+        }
+
+        return deltas;
+    }
+
+    private void stopIfNoAnimalsLeft() {
         if (countAnimals() == 0) {
             System.out.println("STOP: all animals are dead");
             stop();
         }
-
     }
 
     private void applyDeltas(List<LocationDelta> deltas) {
