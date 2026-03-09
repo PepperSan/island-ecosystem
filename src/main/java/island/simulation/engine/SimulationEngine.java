@@ -6,7 +6,9 @@ import island.model.island.Island;
 import island.model.location.Location;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 
 public class SimulationEngine {
@@ -99,83 +101,43 @@ public class SimulationEngine {
     }
 
     private void printStats() {
-        int rabbits = 0;
-        int mice = 0;
-        int goats = 0;
-        int wolves = 0;
-        int foxes = 0;
-        int boas = 0;
-        int plants = 0;
-        int sheep = 0;
-        int bears = 0;
-        int ducks = 0;
-        int deer = 0;
-        int eagles = 0;
-        int horses = 0;
-        int buffalo = 0;
-        int boars = 0;
-        int caterpillars = 0;
+        Map<Species, Integer> stats = new EnumMap<>(Species.class);
+
+        for (Species species : Species.values()) {
+            stats.put(species, 0);
+        }
 
         for (int y = 0; y < island.getHeight(); y++) {
             for (int x = 0; x < island.getWidth(); x++) {
                 Location location = island.getLocation(x, y);
 
                 for (Animal animal : location.getAnimals()) {
-                    if (animal.getSpecies() == Species.RABBIT) {
-                        rabbits++;
-                    } else if (animal.getSpecies() == Species.MOUSE) {
-                        mice++;
-                    } else if (animal.getSpecies() == Species.GOAT) {
-                        goats++;
-                    } else if (animal.getSpecies() == Species.WOLF) {
-                        wolves++;
-                    } else if (animal.getSpecies() == Species.FOX) {
-                        foxes++;
-                    } else if (animal.getSpecies() == Species.BOA) {
-                        boas++;
-                    }
-                    else if (animal.getSpecies() == Species.SHEEP) {
-                        sheep++;
-                    } else if (animal.getSpecies() == Species.BEAR) {
-                        bears++;
-                    }else if (animal.getSpecies() == Species.DUCK) {
-                        ducks++;
-                    } else if (animal.getSpecies() == Species.DEER) {
-                        deer++;
-                    } else if (animal.getSpecies() == Species.EAGLE) {
-                        eagles++;
-                    }else if (animal.getSpecies() == Species.HORSE) {
-                        horses++;
-                    } else if (animal.getSpecies() == Species.BUFFALO) {
-                        buffalo++;
-                    }else if (animal.getSpecies() == Species.BOAR) {
-                        boars++;
-                    } else if (animal.getSpecies() == Species.CATERPILLAR) {
-                        caterpillars++;
-                    }
-
+                    Species species = animal.getSpecies();
+                    stats.put(species, stats.get(species) + 1);
                 }
 
-                plants += location.getPlants().size();
+                stats.put(Species.PLANT, stats.get(Species.PLANT) + location.getPlants().size());
             }
         }
 
-        System.out.println("Tick: rabbits=" + rabbits
-                + ", mice=" + mice
-                + ", goats=" + goats
-                + ", sheep=" + sheep
-                + ", ducks=" + ducks
-                + ", deer=" + deer
-                + ", horses=" + horses
-                + ", buffalo=" + buffalo
-                + ", boars=" + boars
-                + ", caterpillars=" + caterpillars
-                + ", wolves=" + wolves
-                + ", foxes=" + foxes
-                + ", boas=" + boas
-                + ", bears=" + bears
-                + ", eagles=" + eagles
-                + ", plants=" + plants);
+        System.out.println(
+                "Tick: rabbits=" + stats.get(Species.RABBIT)
+                        + ", mice=" + stats.get(Species.MOUSE)
+                        + ", goats=" + stats.get(Species.GOAT)
+                        + ", sheep=" + stats.get(Species.SHEEP)
+                        + ", ducks=" + stats.get(Species.DUCK)
+                        + ", deer=" + stats.get(Species.DEER)
+                        + ", horses=" + stats.get(Species.HORSE)
+                        + ", buffalo=" + stats.get(Species.BUFFALO)
+                        + ", boars=" + stats.get(Species.BOAR)
+                        + ", caterpillars=" + stats.get(Species.CATERPILLAR)
+                        + ", wolves=" + stats.get(Species.WOLF)
+                        + ", foxes=" + stats.get(Species.FOX)
+                        + ", boas=" + stats.get(Species.BOA)
+                        + ", bears=" + stats.get(Species.BEAR)
+                        + ", eagles=" + stats.get(Species.EAGLE)
+                        + ", plants=" + stats.get(Species.PLANT)
+        );
     }
 
     private int countAnimals() {
