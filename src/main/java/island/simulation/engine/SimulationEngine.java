@@ -188,17 +188,6 @@ public class SimulationEngine {
         return animals;
     }
 
-    private int countPlants() {
-        int plants = 0;
-        for (int y = 0; y < island.getHeight(); y++) {
-            for (int x = 0; x < island.getWidth(); x++) {
-                plants += island.getLocation(x, y).getPlants().size();
-            }
-        }
-        return plants;
-    }
-
-
     public void stop() {
         scheduler.shutdownNow();
         workers.shutdownNow();

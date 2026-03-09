@@ -9,15 +9,15 @@ import java.util.concurrent.ThreadLocalRandom;
 public class IslandPopulator {
 
 
-    private static final int MAX_RABBITS_PER_CELL = 5;
-    private static final int MAX_WOLVES_PER_CELL = 2;
+    private static final int MAX_RABBITS_PER_CELL = 8;
+    private static final int MAX_WOLVES_PER_CELL = 1;
     private static final int MAX_PLANTS_PER_CELL = 10;
-    private static final int MAX_MICE_PER_CELL = 3;
+    private static final int MAX_MICE_PER_CELL = 5;
     private static final int MAX_FOXES_PER_CELL = 1;
-    private static final int MAX_GOATS_PER_CELL = 1;
-    private static final int MAX_BOAS_PER_CELL = 1;
-    private static final int MAX_SHEEP_PER_CELL = 1;
-    private static final int MAX_BEARS_PER_CELL = 1;
+    private static final int MAX_GOATS_PER_CELL = 2;
+    private static final int MAX_BOAS_PER_CELL = 0;
+    private static final int MAX_SHEEP_PER_CELL = 2;
+    private static final int MAX_BEARS_PER_CELL = 0;
     private static final int MAX_EAGLES_PER_CELL = 1;
     private static final int MAX_DUCKS_PER_CELL = 1;
     private static final int MAX_DEER_PER_CELL = 1;

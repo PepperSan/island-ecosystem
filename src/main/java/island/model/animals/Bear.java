@@ -20,11 +20,13 @@ public class Bear extends Predator {
     @Override
     public void eat(Location location, LocationDelta delta, Random rnd) {
         for (Animal animal : location.getAnimals()) {
-            if ((animal instanceof Rabbit
-                    || animal instanceof Mouse
-                    || animal instanceof Goat
-                    || animal instanceof Sheep)
-                    && !delta.getAnimalsToRemove().contains(animal)) {
+            if (delta.getAnimalsToRemove().contains(animal)) {
+                continue;
+            }
+
+            int chance = EatTable.chance(getSpecies(), animal.getSpecies());
+
+            if (chance > 0 && rnd.nextInt(100) < chance) {
                 delta.addAnimalToRemove(animal);
                 resetHunger();
                 return;

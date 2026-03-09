@@ -4,10 +4,30 @@ import island.model.island.Island;
 import island.model.location.Location;
 import island.simulation.engine.LocationDelta;
 
+import java.util.Random;
+
 public class Duck extends Herbivore {
 
     public Duck() {
         super(Species.DUCK);
+    }
+
+    @Override
+    public void eat(Location location, LocationDelta delta, Random rnd) {
+        for (Animal animal : location.getAnimals()) {
+            if (animal instanceof Caterpillar && !delta.getAnimalsToRemove().contains(animal)) {
+                delta.addAnimalToRemove(animal);
+                resetHunger();
+                return;
+            }
+        }
+
+        if (location.getPlants().size() > delta.getPlantsToRemoveCount()) {
+            delta.addPlantToRemove();
+            resetHunger();
+        } else {
+            increaseHunger();
+        }
     }
 
     @Override
